@@ -1,11 +1,6 @@
 # Encryption-Decryption
 An encryption-decryption Linux kernel module.
 
-## Operating Systems Course
-(Group No.-32)
-Ritu Kumari, 2016078
-Sneha Sinha, 2016098
-
 #### Commands: 
 
 ##### 1. For encdev character device -
@@ -44,25 +39,25 @@ Proceed as : unloading, making and loading of module.
 - Input and output files are ASCII files.
 
 #### Encdev:
-    1. When writing to device, check if it is the first write to device (use a flag variable to check) and if it is then we're getting the key from the /dev/urandom.
-    2. Saved that in a variable for the key.
-    3. Then, created another array to store current encrypted data.
-    4. For the first write, XOR the input data with the key and save that in encrypted data array.
-    5. Whenever there is a subsequent write to the device, XOR the input data with the last encrypted item and save the current one in the encrypted data array.
-    6. Now, when there's a read from device, first send the key to the user and then send encrypted data array.
+	1. Khi viết một device, kiểm tra nếu đây là lần đầu viết vào device ( sử dụng một biến plag để kiểm tra ) và nếu đúng thì chúng ta lấy key từ /dev/urandom
+	2. Lưu một biến cho khóa
+	3. Sau đó, tạo một mảng khác để lưu trữ dữ liệu được mã hóa hiện tại
+	4. Đối với lần đầu ghi, XOR dữ liệu đầu vào với key và lưu nó trong một mảng dữ liệu mã hóa
+	5. Bất kì khi nào có lần ghi tiếp theo vào thiết bị, hãy XOR dữ liệu đầu vào với mục được mã hóa cuối cùng và lưu mục hiện tại trong mảng dữ liệu mã hóa
+	6. Hiện tại, khi đọc từ một device, đầu tiên gửi key tới user và sau đó gửi mảng dữ liệu mã hóa
 
 #### TestEncDev:
-    1. Input file contains the message to be encrypted, passed as argument.
-    2. The generated key and encrypted data array is written to the output file, passed as argument.
+	1. Tệp đầu vào chứa thông báo được mã hóa, được chuyển đổi dưới dạng đối số
+	2. Khóa được tạo và ,mảng dữ liệu đã mã hóa được ghi vào file đầu ra, được chuyển đổi đưới dạng đối số 
 
 #### Decdev:
-    1. When writing to device, check if it is the first write to device (use a flag variable to check) and if it is then we're getting the key from the file passed as input to the testdecdev.
-    2. Saved that in a variable for the key.
-    3. Then, created another array to store current decrypted data.
-    4. For the first write, XOR the input data with the key and save that in decrypted data array.
-    5. Whenever there is a subsequent write to the device, XOR the input data with the last decrypted item and save the current one in the decrypted data array.
-    6. Now, when there's a read from device, first send the decrypted data array to the user.
+	1. Khi viết thiết bị, kiểm tra nếu nếu đâu là lần đầu tiên viết thiết bị ( dùng biến plag để kiểm tra ) nếu đúng thì chúng ta lấy key từ file truyền vào testdecdev
+	2. Đã lưu điều đó trong một biến cho khóa
+	3. Sau đó, tạo một mảng khác để lưu trữ dữ liệu mã hóa hiện tại
+	4. Đối với lần ghi đầu tiền, XOR dữ liệu đầu vào bằng khóa và lưu dữ liệu đó trong mảng mã hóa
+	5. Bất cứ khi nào có lần ghi tiếp theo vào thiết bị, hãy XOR dữ liệu đầu vào với mục được mã hóa cuối cùng và lưu mục hiện tại trong mảng dữ liệu được giải mã
+	6. Bây giờ, khi có một lần đọc từ thiết bị, trước tiên hãy gửi mảng dữ liệu đã giải mã cho người dùng
 
 #### TestDecDev:
-    1. The argument file contains the encrypted message previously written by the TestEncDev.
-    2. Displays the decrypted message, same as the contents of the Input file.
+	1. File chứa đối số chứa thông báo được mã hóa bởi TestDecDev trước đó
+	2. Hiện thị thông báo được mã hóa, giống như nội dung của file đầu vào
