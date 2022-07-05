@@ -1,20 +1,17 @@
 #include <linux/module.h>
 #include <linux/string.h>
 #include <linux/fs.h>
-#include <asm/uaccess.h>
 #include <linux/init.h>
 #include <linux/kernel.h>
 #include <linux/device.h>
-#include<linux/slab.h>
-#include<linux/slab.h>
-#include<linux/random.h>
+#include <linux/slab.h>
+#include <linux/slab.h>
+#include <linux/random.h>
+#include <linux/uaccess.h>
 
 #define DEVICE_NAME "decdev"
 #define CLASS_NAME "dec"
 #define BUFFER_SIZE 256
-
-MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("decdev driver demo");
 
 static char message[BUFFER_SIZE] = {0};
 static char decrypted[BUFFER_SIZE][BUFFER_SIZE];
@@ -23,10 +20,10 @@ char randomKey[16];
 static struct class* decdevClass = NULL;
 static struct device* decdevDevice = NULL;
 
-static int dev_open(struct inode *, struct file *);
-static ssize_t dev_read(struct file *, char *, size_t, loff_t *);
-static ssize_t dev_write(struct file *, const char *, size_t, loff_t *);
-static int dev_close(struct inode *, struct file *);
+static int dev_open(struct inode *inode, struct file *filp);
+static int dev_close(struct inode *inode, struct file *filp);
+static ssize_t dev_read(struct file *filp, char __user *user_buff, size_t len, loff_t *off);
+static ssize_t dev_write(struct file *filp, const char __user *user_buff, size_t len, loff_t *off);
 
 static struct file_operations fops =
 {
@@ -67,7 +64,7 @@ static int __init decdev_init(void)
         return 0;
 }
 
-static void __exit decdev_exit(void)
+static void __exit decdev_exit(void)	
 {
         device_destroy(decdevClass, MKDEV(90, 0));
         class_unregister(decdevClass);
@@ -166,4 +163,8 @@ static int dev_close(struct inode *inod, struct file *fil)
 }
 
 module_init(decdev_init);
-module_exit(decdev_exit);
+module_exit(decdev_init);
+
+MODULE_LICENSE("GPL");
+MODULE_DESCRIPTION("decdev driver");
+MODULE_AUTHOR("Han");
